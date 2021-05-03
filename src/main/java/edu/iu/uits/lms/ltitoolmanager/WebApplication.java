@@ -1,4 +1,4 @@
-package edu.iu.uits.lms.microservicestemplate;
+package edu.iu.uits.lms.ltitoolmanager;
 
 import canvas.config.EnableCanvasClient;
 import edu.iu.uits.lms.common.samesite.EnableCookieFilter;

@@ -1,4 +1,4 @@
-package edu.iu.uits.lms.microservicestemplate.controller;
+package edu.iu.uits.lms.ltitoolmanager.controller;
 
 import edu.iu.uits.lms.lti.controller.LtiAuthenticationTokenAwareController;
 import edu.iu.uits.lms.lti.security.LtiAuthenticationProvider;

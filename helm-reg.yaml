@@ -12,5 +12,5 @@ env:
 ingress:
   enabled: true
   hosts:
-    - host: "microservices-template-reg.apps-test.iu.edu"
+    - host: "lti-tool-manager-reg.apps-test.iu.edu"
       paths: []
