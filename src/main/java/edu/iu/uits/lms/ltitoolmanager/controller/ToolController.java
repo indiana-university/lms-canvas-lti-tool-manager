@@ -3,7 +3,7 @@ package edu.iu.uits.lms.ltitoolmanager.controller;
 import edu.iu.uits.lms.lti.controller.LtiAuthenticationTokenAwareController;
 import edu.iu.uits.lms.lti.security.LtiAuthenticationProvider;
 import edu.iu.uits.lms.lti.security.LtiAuthenticationToken;
-import edu.iu.uits.lms.microservicestemplate.config.ToolConfig;
+import edu.iu.uits.lms.ltitoolmanager.config.ToolConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
