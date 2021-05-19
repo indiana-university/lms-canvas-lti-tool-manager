@@ -1,6 +1,6 @@
 package edu.iu.uits.lms.ltitoolmanager.services;
 
-import canvas.client.generated.api.CoursesApi;
+import canvas.client.generated.api.ExternalToolApi;
 import edu.iu.uits.lms.lti.LTIConstants;
 import edu.iu.uits.lms.lti.security.LtiAuthenticationProvider;
 import edu.iu.uits.lms.lti.security.LtiAuthenticationToken;
@@ -35,7 +35,7 @@ public class AppLaunchSecurityTest {
    private MockMvc mvc;
 
    @MockBean
-   private CoursesApi coursesApi;
+   private ExternalToolApi externalToolApi;
 
    @Test
    public void appNoAuthnLaunch() throws Exception {

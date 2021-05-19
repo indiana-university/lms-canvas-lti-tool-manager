@@ -1,10 +1,9 @@
 package edu.iu.uits.lms.ltitoolmanager.controller;
 
-import canvas.client.generated.api.CoursesApi;
+import canvas.client.generated.api.ExternalToolApi;
 import canvas.client.generated.model.ExternalTool;
 import edu.iu.uits.lms.lti.LTIConstants;
 import edu.iu.uits.lms.lti.controller.LtiAuthenticationTokenAwareController;
-import edu.iu.uits.lms.lti.security.LtiAuthenticationProvider;
 import edu.iu.uits.lms.lti.security.LtiAuthenticationToken;
 import edu.iu.uits.lms.ltitoolmanager.config.ToolConfig;
 import lombok.extern.slf4j.Slf4j;
@@ -30,7 +29,7 @@ public class ToolController extends LtiAuthenticationTokenAwareController {
    private ToolConfig toolConfig;
 
    @Autowired
-   private CoursesApi coursesApi;
+   private ExternalToolApi externalToolApi;
 
    private final String editButtonlaunchUrl = "https://www.edu-apps.org/redirect";
 
@@ -47,7 +46,7 @@ public class ToolController extends LtiAuthenticationTokenAwareController {
       log.debug("in /index");
       LtiAuthenticationToken token = getValidatedToken(courseId);
 
-      List<ExternalTool> externalToolsList = coursesApi.getExternalTools(courseId);
+      List<ExternalTool> externalToolsList = externalToolApi.getExternalTools(courseId);
       model.addAttribute("externalToolsList", externalToolsList);
       model.addAttribute("editButtonlaunchUrl", editButtonlaunchUrl);
 
@@ -61,7 +60,7 @@ public class ToolController extends LtiAuthenticationTokenAwareController {
       LtiAuthenticationToken token = getValidatedToken(courseId);
 
       // delete the external tool
-      ExternalTool externalTool = coursesApi.deleteExternalTool(courseId, toolId);
+      ExternalTool externalTool = externalToolApi.deleteExternalTool(courseId, toolId);
 
       if ("deleted".equals(externalTool.getWorkflowState())) {
          model.addAttribute("success", "Deleted tool: " + externalTool.getName());
@@ -82,8 +81,19 @@ public class ToolController extends LtiAuthenticationTokenAwareController {
       log.debug("in /editTool");
       LtiAuthenticationToken token = getValidatedToken(courseId);
 
+      if (toolName == null || "".equals(toolName) || redirectUrl == null || "".equals(redirectUrl)) {
+         model.addAttribute("error", "Tool not saved. Tool Name or Redirect URL was empty.");
+         return index(courseId, model, request);
+      }
+
+      boolean isNewTab = false;
+
+      if (redirectUrl.contains("instructure.com")) {
+         isNewTab = true;
+      }
+
       // edit the external tool
-      ExternalTool externalTool = coursesApi.editExternalTool(courseId, toolId, toolName, redirectUrl, isCourseNav);
+      ExternalTool externalTool = externalToolApi.editExternalTool(courseId, toolId, toolName, redirectUrl, isNewTab, isCourseNav);
 
       if (externalTool != null) {
          model.addAttribute("success", "Updated tool: " + externalTool.getName());

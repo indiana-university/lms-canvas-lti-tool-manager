@@ -10,8 +10,8 @@
     <div layout:fragment="content">
         <div class="widthLimit">
             <!-- alerts section -->
-            <div th:if="${success != null}" class="rvt-alert rvt-alert--success rvt-m-top-sm" role="alertdialog" aria-labelledby="success-alert-title-delete">
-                <h1 class="rvt-alert__title" id="success-alert-title-delete" th:text="${success}">Deleted tool: (Tool name)</h1>
+            <div th:if="${success != null}" class="rvt-alert rvt-alert--success rvt-m-top-sm" role="alertdialog" aria-labelledby="success-alert-title">
+                <h1 class="rvt-alert__title" id="success-alert-title" th:text="${success}">Deleted tool: (Tool name)</h1>
                 <button type="button" class="rvt-alert__dismiss" data-alert-close>
                     <span class="v-hide">Dismiss this alert</span>
                     <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
@@ -48,22 +48,20 @@
                         <td>
                             <button type="button" class="rvt-button rvt-button--secondary rvt-m-right-sm"
                                     th:attr="data-modal-trigger=${tool.url == editButtonlaunchUrl} ? @{|delete-redirect-${tool.id}|} : @{|delete-regular-${tool.id}|}">
-                                <span class="rvt-sr-only" th:text="'Delete ' + ${tool.name}">Delete Hammer</span>
-                                <span>Delete</span>
+                                <span>Delete <span class="rvt-sr-only" th:text="${tool.name}">Hammer</span></span>
                             </button>
                             <button type="button" class="rvt-button rvt-button--secondary"
                                     th:data-modal-trigger="@{|edit-tool-properties-${tool.id}|}"
                                     th:if="${tool.url == editButtonlaunchUrl}">
-                                <span class="rvt-sr-only" th:text="'Edit ' + ${tool.name}">Edit Hammer</span>
-                                <span>Edit</span>
+                                <span>Edit <span class="rvt-sr-only" th:text="${tool.name}">Hammer</span></span>
                             </button>
-                            <div th:if="${tool.url == editButtonlaunchUrl}">
+                            <th:block th:if="${tool.url == editButtonlaunchUrl}">
                                 <div th:replace="fragments :: delete-redirect(${tool.id}, ${tool.name})"></div>
                                 <div th:replace="fragments :: edit-tool-properties(${tool.id}, ${tool.name}, ${tool.customFields.get('url')}, ${tool.courseNavigation != null} ? ${tool.courseNavigation.get('enabled')} : false)"></div>
-                            </div>
-                            <div th:if="${tool.url != editButtonlaunchUrl}">
+                            </th:block>
+                            <th:block th:if="${tool.url != editButtonlaunchUrl}">
                                 <div th:replace="fragments :: delete-regular(${tool.id}, ${tool.name})"></div>
-                            </div>
+                            </th:block>
                         </td>
                     </tr>
                     </tbody>
