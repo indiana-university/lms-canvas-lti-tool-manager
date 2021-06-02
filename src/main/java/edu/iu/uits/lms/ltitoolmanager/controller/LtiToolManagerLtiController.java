@@ -64,7 +64,7 @@ public class LtiToolManagerLtiController extends LtiController {
 
     @Override
     protected String getToolContext() {
-        return "lti-tool-manager";
+        return "lms_lti_tool_manager";
     }
 
     @Override
