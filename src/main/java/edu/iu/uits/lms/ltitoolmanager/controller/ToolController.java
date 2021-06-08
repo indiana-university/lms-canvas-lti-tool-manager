@@ -86,10 +86,10 @@ public class ToolController extends LtiAuthenticationTokenAwareController {
          return index(courseId, model, request);
       }
 
-      boolean isNewTab = false;
+      boolean isNewTab = true;
 
       if (redirectUrl.contains("instructure.com")) {
-         isNewTab = true;
+         isNewTab = false;
       }
 
       // edit the external tool
