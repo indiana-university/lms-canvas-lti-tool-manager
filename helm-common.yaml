@@ -1,9 +1,9 @@
-nameOverride: microservices-template
+nameOverride: lti-tool-manager
 
 namespace: ua-vpit--enterprise-systems--lms
 
 image:
-  repository: registry.docker.iu.edu/lms/microservices-template
+  repository: registry.docker.iu.edu/lms/lti-tool-manager
   tag: unstable
   pullPolicy: Always
 
@@ -22,6 +22,8 @@ env:
 
 imagePullSecrets:
   - name: registry-prod
+
+javaOpts: "-XX:MaxRAMPercentage=90 -XshowSettings:vm"
 
 activeProfiles: "redis"
 

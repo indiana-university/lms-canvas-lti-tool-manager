@@ -1,13 +1,73 @@
 <!DOCTYPE HTML>
 <html lang="en-US"
+      xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
 <head>
-    <title>microservices-template - Main Menu</title>
+    <title>LTI Tool Manager</title>
 </head>
 <body>
     <div layout:fragment="content">
-        Hello, world!
+        <div class="widthLimit">
+            <!-- alerts section -->
+            <div th:if="${success != null}" class="rvt-alert rvt-alert--success rvt-m-top-sm" role="alertdialog" aria-labelledby="success-alert-title">
+                <h1 class="rvt-alert__title" id="success-alert-title" th:text="${success}">Deleted tool: (Tool name)</h1>
+                <button type="button" class="rvt-alert__dismiss" data-alert-close>
+                    <span class="v-hide">Dismiss this alert</span>
+                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+                        <path fill="currentColor" d="M9.41,8l5.29-5.29a1,1,0,0,0-1.41-1.41L8,6.59,2.71,1.29A1,1,0,0,0,1.29,2.71L6.59,8,1.29,13.29a1,1,0,1,0,1.41,1.41L8,9.41l5.29,5.29a1,1,0,0,0,1.41-1.41Z"/>
+                    </svg>
+                </button>
+            </div>
+            <div th:if="${error != null}" class="rvt-alert rvt-alert--danger rvt-m-top-sm" role="alertdialog" aria-labelledby="error-alert-title">
+                <h1 class="rvt-alert__title" id="error-alert-title">Error</h1>
+                <p class="rvt-alert__message" th:text="${error}">oh no</p>
+                <button type="button" class="rvt-alert__dismiss" data-alert-close>
+                    <span class="v-hide">Dismiss this alert</span>
+                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+                        <path fill="currentColor" d="M9.41,8l5.29-5.29a1,1,0,0,0-1.41-1.41L8,6.59,2.71,1.29A1,1,0,0,0,1.29,2.71L6.59,8,1.29,13.29a1,1,0,1,0,1.41,1.41L8,9.41l5.29,5.29a1,1,0,0,0,1.41-1.41Z"/>
+                    </svg>
+                </button>
+            </div>
+            <!-- main page -->
+            <h1 class="rvt-ts-32 rvt-p-tb-sm">LTI Tool Manager</h1>
+            <div>
+                <table id="ltiToolTable">
+                    <caption class="sr-only">Table with a list of LTI tools</caption>
+                    <thead>
+                    <tr>
+                        <th scope="col">Tool</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="tool : ${externalToolsList}" th:id="'row-' + ${tool.id}">
+                        <th scope="row">
+                            <span th:text="${tool.name}">Hammer</span>
+                        </th>
+                        <td>
+                            <button type="button" class="rvt-button rvt-button--secondary rvt-m-right-sm"
+                                    th:attr="data-modal-trigger=${tool.url == editButtonlaunchUrl} ? @{|delete-redirect-${tool.id}|} : @{|delete-regular-${tool.id}|}">
+                                <span>Delete <span class="rvt-sr-only" th:text="${tool.name}">Hammer</span></span>
+                            </button>
+                            <button type="button" class="rvt-button rvt-button--secondary"
+                                    th:data-modal-trigger="@{|edit-tool-properties-${tool.id}|}"
+                                    th:if="${tool.url == editButtonlaunchUrl}">
+                                <span>Edit <span class="rvt-sr-only" th:text="${tool.name}">Hammer</span></span>
+                            </button>
+                            <th:block th:if="${tool.url == editButtonlaunchUrl}">
+                                <div th:replace="fragments :: delete-redirect(${tool.id}, ${tool.name})"></div>
+                                <div th:replace="fragments :: edit-tool-properties(${tool.id}, ${tool.name}, ${tool.customFields.get('url')}, ${tool.courseNavigation != null} ? ${tool.courseNavigation.get('enabled')} : false)"></div>
+                            </th:block>
+                            <th:block th:if="${tool.url != editButtonlaunchUrl}">
+                                <div th:replace="fragments :: delete-regular(${tool.id}, ${tool.name})"></div>
+                            </th:block>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </body>
 </html>

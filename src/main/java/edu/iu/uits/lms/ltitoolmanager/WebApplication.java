@@ -1,4 +1,4 @@
-package edu.iu.uits.lms.microservicestemplate;
+package edu.iu.uits.lms.ltitoolmanager;
 
 import canvas.config.EnableCanvasClient;
 import edu.iu.uits.lms.common.samesite.EnableCookieFilter;
@@ -7,7 +7,7 @@ import edu.iu.uits.lms.common.server.ServerInfo;
 import edu.iu.uits.lms.common.server.ServerUtils;
 import edu.iu.uits.lms.lti.config.EnableGlobalErrorHandler;
 import edu.iu.uits.lms.lti.config.EnableLtiClient;
-import edu.iu.uits.lms.microservicestemplate.config.ToolConfig;
+import edu.iu.uits.lms.ltitoolmanager.config.ToolConfig;
 import edu.iu.uits.lms.redis.config.EnableRedisConfiguration;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,6 @@ import java.util.Date;
 @SpringBootApplication
 @EnableGlobalErrorHandler
 @PropertySource(value = {"classpath:env.properties",
-      "${app.fullFilePath}/database.properties",
       "${app.fullFilePath}/oauth.properties",
       "${app.fullFilePath}/services.properties",
       "${app.fullFilePath}/security.properties"}, ignoreResourceNotFound = true)
