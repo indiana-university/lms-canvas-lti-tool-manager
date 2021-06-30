@@ -4,7 +4,7 @@
     <artifactId>lti-tool-manager</artifactId>
     <packaging>jar</packaging>
     <name>lti-tool-manager</name>
-    <version>4.0.0-SNAPSHOT</version>
+    <version>4.0.0</version>
 
     <parent>
         <artifactId>lms2Wow</artifactId>
