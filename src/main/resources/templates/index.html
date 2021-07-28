@@ -32,7 +32,8 @@
             <!-- main page -->
             <h1 class="rvt-ts-32 rvt-p-tb-sm">Edit/Delete Course Apps</h1>
             <div>
-                <table id="ltiToolTable">
+                <p class="rvt-ts-23" th:if="${externalToolsList.isEmpty()}">There are no course-level apps in this course to display.</p>
+                <table id="ltiToolTable" th:if="not ${externalToolsList.isEmpty()}">
                     <caption class="sr-only">Table with a list of LTI tools</caption>
                     <thead>
                     <tr>
