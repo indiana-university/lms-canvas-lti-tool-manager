@@ -1,7 +1,7 @@
 
 projectedSecret:
   - secret:
-      name: "properties-2021-05-10"
+      name: "properties-2021-06-07"
   - secret:
       name: "lms-security-properties-20201014"
 
@@ -16,3 +16,9 @@ ingress:
   hosts:
     - host: "lti-tool-manager.apps.iu.edu"
       paths: []
+
+activeProfiles: "redis,prd"
+
+serviceAccountName: lti-tool-manager-prd
+
+cluster: es-prod
