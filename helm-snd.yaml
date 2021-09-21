@@ -1,7 +1,7 @@
 
 projectedSecret:
   - secret:
-      name: "properties-2021-05-10"
+      name: "properties-2021-06-07"
 
 image:
   tag: unstable-snd
@@ -14,3 +14,9 @@ ingress:
   hosts:
     - host: "lti-tool-manager-snd.apps-snd.iu.edu"
       paths: []
+
+activeProfiles: "redis,snd"
+
+serviceAccountName: lti-tool-manager-snd
+
+cluster: es-test
