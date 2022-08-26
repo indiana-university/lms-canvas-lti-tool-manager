@@ -23,7 +23,7 @@ import java.util.Date;
 @Slf4j
 @EnableRedisConfiguration
 @EnableCookieFilter(ignoredRequestPatterns = {"/rest/**"})
-@EnableLtiClient
+@EnableLtiClient(toolKeys = {"lms_lti_tool_manager"})
 @EnableCanvasClient
 @EnableConfigurationProperties(GitRepositoryState.class)
 public class WebApplication {

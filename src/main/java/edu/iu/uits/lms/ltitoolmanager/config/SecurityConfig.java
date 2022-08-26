@@ -1,14 +1,17 @@
 package edu.iu.uits.lms.ltitoolmanager.config;
 
-import edu.iu.uits.lms.common.oauth.CustomJwtAuthenticationConverter;
-import edu.iu.uits.lms.lti.security.LtiAuthenticationProvider;
+import edu.iu.uits.lms.lti.service.LmsDefaultGrantedAuthoritiesMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.http.SessionCreationPolicy;
+import uk.ac.ox.ctl.lti13.Lti13Configurer;
+
+import static edu.iu.uits.lms.lti.LTIConstants.BASE_USER_ROLE;
+import static edu.iu.uits.lms.lti.LTIConstants.WELL_KNOWN_ALL;
 
 @Configuration
 public class SecurityConfig {
@@ -16,22 +19,23 @@ public class SecurityConfig {
     @Configuration
     @Order(SecurityProperties.BASIC_AUTH_ORDER - 4)
     public static class AppWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
+        @Autowired
+        private LmsDefaultGrantedAuthoritiesMapper lmsDefaultGrantedAuthoritiesMapper;
 
         @Override
         protected void configure(HttpSecurity http) throws Exception {
-            http.authenticationProvider(new LtiAuthenticationProvider());
             http
-                  .requestMatchers().antMatchers("/lti", "/app/**")
-                  .and()
-                  .authorizeRequests()
-                  .antMatchers("/lti").permitAll()
-                  .antMatchers("/app/**").hasRole(LtiAuthenticationProvider.LTI_USER);
+                    .requestMatchers()
+                    .antMatchers(WELL_KNOWN_ALL, "/api/**", "/app/**")
+                    .and()
+                    .authorizeRequests()
+                    .antMatchers("/api/**").permitAll()
+                    .antMatchers("/**").hasRole(BASE_USER_ROLE);
 
-            //Need to disable csrf so that we can use POST via REST
-            http.csrf().disable();
-
-            //Need to disable the frame options so we can embed this in another tool
-            http.headers().frameOptions().disable();
+            // Set up the LTI handshake
+            Lti13Configurer lti13Configurer = new Lti13Configurer()
+                    .grantedAuthoritiesMapper(lmsDefaultGrantedAuthoritiesMapper);
+            http.apply(lti13Configurer);
 
             http.exceptionHandling().accessDeniedPage("/accessDenied");
         }

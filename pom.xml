@@ -19,7 +19,7 @@
         <jquery.version>3.5.1</jquery.version>
 
         <lms-canvas-common-configuration.version>5.0.4</lms-canvas-common-configuration.version>
-        <lms-canvas-lti-framework.version>5.0.4</lms-canvas-lti-framework.version>
+        <lms-canvas-lti-framework.version>5.1.10</lms-canvas-lti-framework.version>
         <lms-canvas-redis-config.version>5.0.7</lms-canvas-redis-config.version>
         <lms-canvas-rivet.version>5.1.8.2_1</lms-canvas-rivet.version>
         <lms-canvas-services.version>5.0.9</lms-canvas-services.version>
@@ -82,6 +82,10 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-oauth2-client</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
