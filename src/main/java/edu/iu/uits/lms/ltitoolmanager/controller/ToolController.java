@@ -1,7 +1,7 @@
 package edu.iu.uits.lms.ltitoolmanager.controller;
 
-import canvas.client.generated.api.ExternalToolApi;
-import canvas.client.generated.model.ExternalTool;
+import edu.iu.uits.lms.canvas.model.ExternalTool;
+import edu.iu.uits.lms.canvas.services.ExternalToolsService;
 import edu.iu.uits.lms.lti.LTIConstants;
 import edu.iu.uits.lms.lti.controller.LtiAuthenticationTokenAwareController;
 import edu.iu.uits.lms.lti.security.LtiAuthenticationToken;
@@ -29,7 +29,7 @@ public class ToolController extends LtiAuthenticationTokenAwareController {
    private ToolConfig toolConfig;
 
    @Autowired
-   private ExternalToolApi externalToolApi;
+   private ExternalToolsService externalToolsService;
 
    private final String editButtonlaunchUrl = "https://www.edu-apps.org/redirect";
 
@@ -46,7 +46,7 @@ public class ToolController extends LtiAuthenticationTokenAwareController {
       log.debug("in /index");
       LtiAuthenticationToken token = getValidatedToken(courseId);
 
-      List<ExternalTool> externalToolsList = externalToolApi.getExternalTools(courseId);
+      List<ExternalTool> externalToolsList = externalToolsService.getExternalTools(courseId);
       model.addAttribute("externalToolsList", externalToolsList);
       model.addAttribute("editButtonlaunchUrl", editButtonlaunchUrl);
 
@@ -60,7 +60,7 @@ public class ToolController extends LtiAuthenticationTokenAwareController {
       LtiAuthenticationToken token = getValidatedToken(courseId);
 
       // delete the external tool
-      ExternalTool externalTool = externalToolApi.deleteExternalTool(courseId, toolId);
+      ExternalTool externalTool = externalToolsService.deleteExternalTool(courseId, toolId);
 
       if ("deleted".equals(externalTool.getWorkflowState())) {
          model.addAttribute("success", "Deleted tool: " + externalTool.getName());
@@ -93,7 +93,7 @@ public class ToolController extends LtiAuthenticationTokenAwareController {
       }
 
       // edit the external tool
-      ExternalTool externalTool = externalToolApi.editExternalTool(courseId, toolId, toolName, redirectUrl, isNewTab, isCourseNav);
+      ExternalTool externalTool = externalToolsService.editExternalTool(courseId, toolId, toolName, redirectUrl, isNewTab, isCourseNav);
 
       if (externalTool != null) {
          model.addAttribute("success", "Updated tool: " + externalTool.getName());
