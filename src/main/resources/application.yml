@@ -51,6 +51,10 @@ management:
   endpoints.web.exposure.include: health,info
   health.redis.enabled: false
 
+springdoc:
+  api-docs.enabled: false
+  swagger-ui.enabled: false
+
 ---
 spring:
   config.activate.on-profile: redis-session
@@ -86,7 +90,7 @@ springdoc:
     enabled: true
     path: /api/v3/api-docs
   cache.disabled: true
-#  packagesToScan: edu.iu.uits.lms.hierarchyresourcemanager.rest
+  packagesToScan: edu.iu.uits.lms.ltitoolmanager.rest
   swagger-ui:
     enabled: false
     disable-swagger-default-url: true
