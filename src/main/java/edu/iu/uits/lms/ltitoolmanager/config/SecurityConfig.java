@@ -17,25 +17,6 @@ import static edu.iu.uits.lms.lti.LTIConstants.WELL_KNOWN_ALL;
 
 @Configuration
 public class SecurityConfig {
-
-    @Configuration
-    @Order(SecurityProperties.BASIC_AUTH_ORDER - 5)
-    public static class RestSecurityConfigurationAdapter extends WebSecurityConfigurerAdapter {
-        @Override
-        public void configure(HttpSecurity http) throws Exception {
-            http.requestMatchers().antMatchers("/rest/**")
-                    .and()
-                    .authorizeRequests()
-                    .antMatchers("/rest/**")
-                    .access("hasAuthority('SCOPE_lms:rest') and hasAuthority('ROLE_LMS_REST_ADMINS')")
-                    .and()
-                    .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                    .and()
-                    .oauth2ResourceServer()
-                    .jwt().jwtAuthenticationConverter(new CustomJwtAuthenticationConverter());
-        }
-    }
-
     @Configuration
     @Order(SecurityProperties.BASIC_AUTH_ORDER - 4)
     public static class AppWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
