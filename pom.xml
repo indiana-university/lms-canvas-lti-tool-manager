@@ -15,7 +15,7 @@
     </parent>
 
     <description>Edit/Delete Course Apps</description>
-    <url>https://github.com/indiana-university/lms-canvas-lti-framework</url>
+    <url>https://github.com/indiana-university/lms-canvas-lti-tool-manager</url>
     <inceptionYear>2015</inceptionYear>
 
     <organization>
@@ -34,7 +34,7 @@
 
     <issueManagement>
         <system>GitHub</system>
-        <url>https://github.com/indiana-university/lms-canvas-lti-framework/issues</url>
+        <url>https://github.com/indiana-university/lms-canvas-lti-tool-manager/issues</url>
     </issueManagement>
 
     <licenses>
@@ -59,9 +59,9 @@
     </distributionManagement>
 
     <scm>
-        <connection>scm:git:https://github.com/indiana-university/lms-canvas-lti-framework.git</connection>
-        <developerConnection>scm:git:https://github.com/indiana-university/lms-canvas-lti-framework.git</developerConnection>
-        <url>https://github.com/indiana-university/lms-canvas-lti-framework</url>
+        <connection>scm:git:https://github.com/indiana-university/lms-canvas-lti-tool-manager.git</connection>
+        <developerConnection>scm:git:https://github.com/indiana-university/lms-canvas-lti-tool-manager.git</developerConnection>
+        <url>https://github.com/indiana-university/lms-canvas-lti-tool-manager</url>
         <tag>HEAD</tag>
     </scm>
 

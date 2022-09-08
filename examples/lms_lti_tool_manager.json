@@ -1,6 +1,6 @@
 {
   "title": "Edit/Delete Course Apps",
-  "description": "Edit/Delete Course Apps",
+  "description": "LTI tool for managing certain LTI tool placements",
   "oidc_initiation_url": "http://localhost:8080/lti/login_initiation/lms_lti_tool_manager",
   "target_link_uri": "http://localhost:8080/app/launch",
   "extensions": [

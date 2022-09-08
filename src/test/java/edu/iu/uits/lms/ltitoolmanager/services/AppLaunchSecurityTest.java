@@ -49,6 +49,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import uk.ac.ox.ctl.lti13.security.oauth2.client.lti.authentication.OidcAuthenticationToken;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -71,6 +72,21 @@ public class AppLaunchSecurityTest {
             .header(HttpHeaders.USER_AGENT, TestUtils.defaultUseragent())
             .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isForbidden());
+   }
+
+   @Test
+   public void appAuthnWrongContextLaunch() throws Exception {
+      OidcAuthenticationToken token = edu.iu.uits.lms.lti.service.TestUtils.buildToken("userId", "asdf", LTIConstants.INSTRUCTOR_AUTHORITY);
+
+      SecurityContextHolder.getContext().setAuthentication(token);
+
+      // This is a secured endpoint and should not allow access without authn
+      mvc.perform(get("/app/index/1234")
+                      .header(HttpHeaders.USER_AGENT, edu.iu.uits.lms.lti.service.TestUtils.defaultUseragent())
+                      .contentType(MediaType.APPLICATION_JSON))
+              .andExpect(status().isInternalServerError())
+              .andExpect(MockMvcResultMatchers.view().name ("error"))
+              .andExpect(MockMvcResultMatchers.model().attributeExists("error"));
    }
 
    @Test
