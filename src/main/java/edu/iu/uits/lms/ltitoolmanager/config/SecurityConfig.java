@@ -33,7 +33,6 @@ package edu.iu.uits.lms.ltitoolmanager.config;
  * #L%
  */
 
-import edu.iu.uits.lms.common.oauth.CustomJwtAuthenticationConverter;
 import edu.iu.uits.lms.lti.service.LmsDefaultGrantedAuthoritiesMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
@@ -42,7 +41,6 @@ import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import uk.ac.ox.ctl.lti13.Lti13Configurer;
 
 import static edu.iu.uits.lms.lti.LTIConstants.BASE_USER_ROLE;
