@@ -1,4 +1,4 @@
-package edu.iu.uits.lms.ltitoolmanager.config;
+package edu.iu.uits.lms.ltitoolmanager.services.swagger;
 
 /*-
  * #%L
@@ -33,29 +33,18 @@ package edu.iu.uits.lms.ltitoolmanager.config;
  * #L%
  */
 
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import edu.iu.uits.lms.lti.swagger.AbstractSwaggerEmbeddedToolTest;
+import edu.iu.uits.lms.ltitoolmanager.WebApplication;
+import edu.iu.uits.lms.ltitoolmanager.config.SecurityConfig;
+import org.springframework.boot.test.context.SpringBootTest;
 
-@Configuration
-@EnableWebMvc
-@EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
-@Slf4j
-public class ApplicationConfig implements WebMvcConfigurer {
+import java.util.List;
 
-   public ApplicationConfig() {
-      log.debug("ApplicationConfig()");
-   }
+@SpringBootTest(classes = {WebApplication.class, SecurityConfig.class})
+public class SwaggerEmbeddedToolTest extends AbstractSwaggerEmbeddedToolTest {
 
    @Override
-   // used to read in various directories to add resources for the templates to use
-   public void addResourceHandlers(ResourceHandlerRegistry registry) {
-      registry.addResourceHandler("/app/css/**").addResourceLocations("classpath:/static/css/");
-      registry.addResourceHandler("/app/js/**").addResourceLocations("classpath:/static/js/");
-      registry.addResourceHandler("/app/webjars/**").addResourceLocations("/webjars/").resourceChain(true);
-      registry.addResourceHandler("/app/jsrivet/**").addResourceLocations("classpath:/META-INF/resources/jsrivet/").resourceChain(true);
+   protected List<String> getEmbeddedSwaggerToolPaths() {
+      return SwaggerTestUtil.getEmbeddedSwaggerToolPaths(super.getEmbeddedSwaggerToolPaths());
    }
 }
