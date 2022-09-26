@@ -14,7 +14,7 @@ Add env vars or system properties as desired.
 
 ## Setup Database
 After compiling, see `target/generated-resources/sql/ddl/auto/postgresql9.sql` for appropriate ddl.
-Insert a record into the `LTI_13_AUTHZ` table with your tool's registration_id (`lms_lti_viewem`), along with the client_id
+Insert a record into the `LTI_13_AUTHZ` table with your tool's registration_id (`lms_lti_tool_manager`), along with the client_id
 and secret from Canvas's Developer Key.  An `env` designator is also required here, and allows a database to support
 multiple environments simultaneously (dev and reg, for example).
 
