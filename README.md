@@ -45,7 +45,7 @@ From the `Security Model` section, set the following:
 <tr><td>LTI version</td><td>1.3.0</td></tr>
 <tr><td>Message URL</td><td>http://localhost:8080/app/launch</td></tr>
 <tr><td>Client ID</td><td>dev (or whatever is appropriate based on the record inserted in the database table from above)</td></tr>
-<tr><td>Initiate login URL</td><td>http://localhost:8080/lti/login_initiation/lms_lti_viewem</td></tr>
+<tr><td>Initiate login URL</td><td>http://localhost:8080/lti/login_initiation/lms_lti_tool_manager</td></tr>
 <tr><td>Redirection URI(s)</td><td>http://localhost:8080/lti/login</td></tr>
 </table>
 
