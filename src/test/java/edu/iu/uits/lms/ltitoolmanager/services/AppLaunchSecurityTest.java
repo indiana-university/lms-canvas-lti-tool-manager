@@ -37,7 +37,7 @@ import edu.iu.uits.lms.canvas.config.CanvasClientTestConfig;
 import edu.iu.uits.lms.canvas.services.ExternalToolsService;
 import edu.iu.uits.lms.lti.LTIConstants;
 import edu.iu.uits.lms.lti.config.LtiClientTestConfig;
-import edu.iu.uits.lms.lti.service.TestUtils;
+import edu.iu.uits.lms.lti.config.TestUtils;
 import edu.iu.uits.lms.ltitoolmanager.config.ToolConfig;
 import edu.iu.uits.lms.ltitoolmanager.controller.ToolController;
 import org.junit.jupiter.api.Test;
@@ -76,13 +76,13 @@ public class AppLaunchSecurityTest {
 
    @Test
    public void appAuthnWrongContextLaunch() throws Exception {
-      OidcAuthenticationToken token = edu.iu.uits.lms.lti.service.TestUtils.buildToken("userId", "asdf", LTIConstants.INSTRUCTOR_AUTHORITY);
+      OidcAuthenticationToken token = TestUtils.buildToken("userId", "asdf", LTIConstants.INSTRUCTOR_AUTHORITY);
 
       SecurityContextHolder.getContext().setAuthentication(token);
 
       // This is a secured endpoint and should not allow access without authn
       mvc.perform(get("/app/index/1234")
-                      .header(HttpHeaders.USER_AGENT, edu.iu.uits.lms.lti.service.TestUtils.defaultUseragent())
+                      .header(HttpHeaders.USER_AGENT, TestUtils.defaultUseragent())
                       .contentType(MediaType.APPLICATION_JSON))
               .andExpect(status().isInternalServerError())
               .andExpect(MockMvcResultMatchers.view().name ("error"))
