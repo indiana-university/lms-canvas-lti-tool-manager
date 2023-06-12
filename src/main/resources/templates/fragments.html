@@ -35,83 +35,94 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
     <div th:fragment="delete-regular(id, name)">
-        <div class="rvt-modal"
+        <div class="rvt-dialog"
              th:id="'delete-regular-' + ${id}"
              role="dialog"
+             th:data-rvt-dialog="'delete-regular-' + ${id}"
              th:aria-labelledby="'delete-regular-dialog-' + ${id}"
              th:aria-describedby="'delete-regular-dialog-text-' + ${id}"
-             aria-hidden="true"
+             hidden
              tabindex="-1"
-             data-modal-dialog="true">
+             data-rvt-dialog-modal
+             data-rvt-dialog-darken-page
+             data-rvt-dialog-disable-page-interaction>
             <form th:id="'form-delete-regular-' + ${id}" action="index.html" th:action="@{|/app/${courseId}/delete/${id}|}" method="post">
-            <div class="rvt-modal__inner">
-                <h1 class="rvt-modal__header rvt-modal__title" th:id="'delete-regular-dialog-' + ${id}" th:text="'Delete ' + ${name}">Delete (tool name)</h1>
-                <div class="rvt-modal__body">
+                <header class="rvt-dialog__header">
+                    <h1 class="rvt-dialog__title" th:id="'delete-regular-dialog-' + ${id}" th:text="'Delete ' + ${name}">Delete (tool name)</h1>
+                </header>
+                <div class="rvt-dialog__body">
                     <p th:id="'delete-regular-dialog-text-' + ${id}">
                         If this tool was used to link to (or embed) instructional courseware or content in Canvas
                         Assignments, Modules, or Pages in your course, deleting the tool will break those links. Are you
                         sure you want to delete it?
                     </p>
                 </div>
-                <div class="rvt-modal__controls">
+                <div class="rvt-dialog__controls">
                     <button type="submit" class="rvt-button">Yes, Delete</button>
-                    <button type="button" class="rvt-button rvt-button--secondary" th:data-modal-close="'delete-regular-' + ${id}">Cancel</button>
+                    <button type="button" class="rvt-button rvt-button--secondary" th:data-rvt-dialog-close="'delete-regular-' + ${id}">Cancel</button>
                 </div>
-            </div>
             </form>
         </div>
     </div>
 
     <div th:fragment="delete-redirect(id, name)">
-        <div class="rvt-modal"
+        <div class="rvt-dialog"
              th:id="'delete-redirect-' + ${id}"
              role="dialog"
+             th:data-rvt-dialog="'delete-redirect-' + ${id}"
              th:aria-labelledby="'delete-redirect-dialog-' + ${id}"
              th:aria-describedby="'delete-redirect-dialog-text-' + ${id}"
-             aria-hidden="true"
+             hidden
              tabindex="-1"
-             data-modal-dialog="true">
+             data-rvt-dialog-modal
+             data-rvt-dialog-darken-page
+             data-rvt-dialog-disable-page-interaction>
             <form th:id="'form-delete-redirect-' + ${id}" action="index.html" th:action="@{|/app/${courseId}/delete/${id}|}" method="post">
-            <div class="rvt-modal__inner">
-                <h1 class="rvt-modal__header rvt-modal__title" th:id="'delete-redirect-dialog-' + ${id}" th:text="'Delete ' + ${name}">Delete (tool name)</h1>
-                <div class="rvt-modal__body">
+                <header class="rvt-dialog__header">
+                    <h1 class="rvt-dialog__title" th:id="'delete-redirect-dialog-' + ${id}" th:text="'Delete ' + ${name}">Delete (tool name)</h1>
+                </header>
+                <div class="rvt-dialog__body">
                     <p th:id="'delete-redirect-dialog-text-' + ${id}">
                         Are you sure you want to delete this web redirect?
                     </p>
                 </div>
-                <div class="rvt-modal__controls">
+                <div class="rvt-dialog__controls">
                     <button type="submit" class="rvt-button">Yes, Delete</button>
-                    <button type="button" class="rvt-button rvt-button--secondary" th:data-modal-close="'delete-redirect-' + ${id}">Cancel</button>
+                    <button type="button" class="rvt-button rvt-button--secondary" th:data-rvt-dialog-close="'delete-redirect-' + ${id}">Cancel</button>
                 </div>
-            </div>
             </form>
         </div>
     </div>
 
     <div th:fragment="edit-tool-properties(id, name, redirecturl, coursenav)">
-        <div class="rvt-modal"
+        <div class="rvt-dialog"
              th:id="'edit-tool-properties-' + ${id}"
              role="dialog"
+             th:data-rvt-dialog="'edit-tool-properties-' + ${id}"
              th:aria-labelledby="'edit-tool-properties-dialog-' + ${id}"
-             aria-hidden="true"
+             hidden
              tabindex="-1"
-             data-modal-dialog="true">
+             data-rvt-dialog-modal
+             data-rvt-dialog-darken-page
+             data-rvt-dialog-disable-page-interaction>
             <form th:id="'form-edit-tool-' + ${id}" action="index.html" th:action="@{|/app/${courseId}/edit/${id}|}" method="post">
-            <div class="rvt-modal__inner">
-                <h1 class="rvt-modal__header rvt-modal__title" th:id="'edit-tool-properties-dialog-' + ${id}" th:text="'Edit Properties for ' + ${name}">Edit Properties for (tool name)</h1>
-                <div class="rvt-modal__body">
-                    <label th:for="'tool-name-' + ${id}">Name</label>
-                    <input type="text" th:id="'tool-name-' + ${id}" name="tool-name" th:value="${name}" />
-                    <label th:for="'redirect-url-' + ${id}" class="rvt-m-top-md">Redirect URL</label>
-                    <input type="text" th:id="'redirect-url-' + ${id}" name="redirect-url" th:value="${redirecturl}"/>
-                    <input type="checkbox" name="course-nav-checkbox" th:id="'course-nav-checkbox-' + ${id}" th:checked="${coursenav}">
-                    <label th:for="'course-nav-checkbox-' + ${id}" class="rvt-m-top-md">Show in course navigation</label>
+                <header class="rvt-dialog__header">
+                    <h1 class="rvt-dialog__title" th:id="'edit-tool-properties-dialog-' + ${id}" th:text="'Edit Properties for ' + ${name}">Edit Properties for (tool name)</h1>
+                </header>
+                <div class="rvt-dialog__body">
+                    <label th:for="'tool-name-' + ${id}" class="rvt-label">Name</label>
+                    <input type="text" th:id="'tool-name-' + ${id}" name="tool-name" th:value="${name}" class="rvt-text-input" />
+                    <label th:for="'redirect-url-' + ${id}" class="rvt-m-top-md rvt-label">Redirect URL</label>
+                    <input type="text" th:id="'redirect-url-' + ${id}" name="redirect-url" th:value="${redirecturl}" class="rvt-text-input" />
+                    <div class="rvt-checkbox rvt-m-top-md">
+                        <input type="checkbox" name="course-nav-checkbox" th:id="'course-nav-checkbox-' + ${id}" th:checked="${coursenav}">
+                        <label th:for="'course-nav-checkbox-' + ${id}">Show in course navigation</label>
+                    </div>
                 </div>
-                <div class="rvt-modal__controls">
+                <div class="rvt-dialog__controls">
                     <button type="submit" class="rvt-button">Save</button>
-                    <button type="button" class="rvt-button rvt-button--secondary" th:data-modal-close="'edit-tool-properties-' + ${id}">Cancel</button>
+                    <button type="button" class="rvt-button rvt-button--secondary" th:data-rvt-dialog-close="'edit-tool-properties-' + ${id}">Cancel</button>
                 </div>
-            </div>
             </form>
         </div>
     </div>
