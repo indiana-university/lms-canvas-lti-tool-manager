@@ -5,7 +5,7 @@
     <artifactId>lti-tool-manager</artifactId>
     <packaging>jar</packaging>
     <name>lti-tool-manager</name>
-    <version>5.0.1-SNAPSHOT</version>
+    <version>5.0.1</version>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -62,7 +62,7 @@
         <connection>scm:git:https://github.com/indiana-university/lms-canvas-lti-tool-manager.git</connection>
         <developerConnection>scm:git:https://github.com/indiana-university/lms-canvas-lti-tool-manager.git</developerConnection>
         <url>https://github.com/indiana-university/lms-canvas-lti-tool-manager</url>
-        <tag>HEAD</tag>
+        <tag>lti-tool-manager-5.0.1</tag>
     </scm>
 
     <properties>
