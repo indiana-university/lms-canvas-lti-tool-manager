@@ -63,7 +63,7 @@
                 </button>
             </div>
             <!-- main page -->
-            <h1 class="rvt-ts-32 rvt-p-tb-sm">Edit/Delete Course Apps</h1>
+            <h1 id="tool-title" class="rvt-ts-32 rvt-p-tb-sm">Edit/Delete Course Apps</h1>
             <div>
                 <p class="rvt-ts-23" th:if="${externalToolsList.isEmpty()}">There are no course-level apps in this course to display.</p>
                 <table id="ltiToolTable" class="rvt-table" th:if="not ${externalToolsList.isEmpty()}">
