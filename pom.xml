@@ -5,7 +5,7 @@
     <artifactId>lti-tool-manager</artifactId>
     <packaging>jar</packaging>
     <name>lti-tool-manager</name>
-    <version>0.99.4-SNAPSHOT</version>
+    <version>5.0.3-SNAPSHOT</version>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
