@@ -54,23 +54,23 @@
 
     <properties>
         <app.version>${project.version}</app.version>
-        <git-commit-id-maven-plugin.version>5.0.0</git-commit-id-maven-plugin.version>
+        <git-commit-id-maven-plugin.version>8.0.2</git-commit-id-maven-plugin.version>
         <hibernate5-ddl-maven-plugin.version>2.5.0</hibernate5-ddl-maven-plugin.version>
         <java.version>17</java.version>
         <jdk.source>17</jdk.source>
         <jdk.target>17</jdk.target>
-        <jquery.version>3.6.4</jquery.version>
+        <jquery.version>3.7.1</jquery.version>
 
-        <lms-embedded-services.version>5.2.11</lms-embedded-services.version>
-        <lms-team-spring-boot-it12>4.8</lms-team-spring-boot-it12>
-        <lms-canvas-rivet.version>5.2.4.0</lms-canvas-rivet.version>
-        <spring-cloud.version>2021.0.7</spring-cloud.version>
+        <lms-embedded-services.version>5.2.35</lms-embedded-services.version>
+        <lms-team-spring-boot-it12>5.4.7</lms-team-spring-boot-it12>
+        <lms-canvas-rivet.version>5.2.7.0_1</lms-canvas-rivet.version>
+        <spring-cloud.version>2021.0.9</spring-cloud.version>
 
-        <plugins.compiler.version>3.11.0</plugins.compiler.version>
-        <plugins.license.version>2.0.0</plugins.license.version>
-        <plugins.release.version>3.0.0</plugins.release.version>
-        <springdoc-openapi-ui.version>1.7.0</springdoc-openapi-ui.version>
-        <webjars-locator.version>0.46</webjars-locator.version>
+        <plugins.compiler.version>3.13.0</plugins.compiler.version>
+        <plugins.license.version>2.4.0</plugins.license.version>
+        <plugins.release.version>3.0.1</plugins.release.version>
+        <springdoc-openapi-ui.version>1.8.0</springdoc-openapi-ui.version>
+        <webjars-locator.version>0.52</webjars-locator.version>
     </properties>
 
     <dependencyManagement>
