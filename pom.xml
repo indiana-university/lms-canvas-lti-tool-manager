@@ -5,12 +5,12 @@
     <artifactId>lti-tool-manager</artifactId>
     <packaging>jar</packaging>
     <name>lti-tool-manager</name>
-    <version>5.0.5-SNAPSHOT</version>
+    <version>6.1.0-SNAPSHOT</version>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.7.18</version>
+        <version>3.4.8</version>
         <relativePath /> <!-- lookup parent from repository -->
     </parent>
 
@@ -54,22 +54,22 @@
 
     <properties>
         <app.version>${project.version}</app.version>
-        <git-commit-id-maven-plugin.version>8.0.2</git-commit-id-maven-plugin.version>
-        <hibernate5-ddl-maven-plugin.version>2.5.0</hibernate5-ddl-maven-plugin.version>
-        <java.version>17</java.version>
-        <jdk.source>17</jdk.source>
-        <jdk.target>17</jdk.target>
+        <git-commit-id-maven-plugin.version>9.0.2</git-commit-id-maven-plugin.version>
+        <hibernate6-ddl-maven-plugin.version>1.0.2</hibernate6-ddl-maven-plugin.version>
+        <java.version>21</java.version>
+        <jdk.source>21</jdk.source>
+        <jdk.target>21</jdk.target>
         <jquery.version>3.7.1</jquery.version>
 
-        <lms-embedded-services.version>5.2.35</lms-embedded-services.version>
-        <lms-team-spring-boot-it12>5.4.7</lms-team-spring-boot-it12>
-        <lms-canvas-rivet.version>5.2.7.0_1</lms-canvas-rivet.version>
-        <spring-cloud.version>2021.0.9</spring-cloud.version>
+        <lms-embedded-services.version>6.2.7</lms-embedded-services.version>
+        <lms-team-spring-boot-it12>6.5.1_1</lms-team-spring-boot-it12>
+        <lms-canvas-rivet.version>6.2.9.0</lms-canvas-rivet.version>
+        <spring-cloud.version>2024.0.2</spring-cloud.version>
 
-        <plugins.compiler.version>3.13.0</plugins.compiler.version>
-        <plugins.license.version>2.4.0</plugins.license.version>
-        <plugins.release.version>3.0.1</plugins.release.version>
-        <springdoc-openapi-ui.version>1.8.0</springdoc-openapi-ui.version>
+        <plugins.compiler.version>3.14.0</plugins.compiler.version>
+        <plugins.license.version>2.6.0</plugins.license.version>
+        <plugins.release.version>3.1.1</plugins.release.version>
+        <springdoc-openapi-ui.version>2.8.9</springdoc-openapi-ui.version>
         <webjars-locator.version>0.52</webjars-locator.version>
     </properties>
 
@@ -146,9 +146,8 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>edu.iu.uits.lms</groupId>
-            <artifactId>lms-canvas-redis-config</artifactId>
-            <version>${lms-embedded-services.version}</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
         <dependency>
             <groupId>edu.iu.uits.lms</groupId>
@@ -183,13 +182,18 @@
         </dependency>
         <dependency>
             <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-ui</artifactId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
             <version>${springdoc-openapi-ui.version}</version>
         </dependency>
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-properties-migrator</artifactId>
+            <scope>runtime</scope>
         </dependency>
     </dependencies>
 
@@ -234,8 +238,8 @@
             </plugin>
             <plugin>
                 <groupId>de.jpdigital</groupId>
-                <artifactId>hibernate54-ddl-maven-plugin</artifactId>
-                <version>${hibernate5-ddl-maven-plugin.version}</version>
+                <artifactId>hibernate65-ddl-maven-plugin</artifactId>
+                <version>${hibernate6-ddl-maven-plugin.version}</version>
                 <executions>
                     <execution>
                         <goals>
@@ -247,7 +251,7 @@
                 <configuration>
                     <dialects>
                         <param>h2</param>
-                        <param>postgresql9</param>
+                        <param>postgresql</param>
                     </dialects>
                     <packages>
                         <param>edu.iu.uits.lms.ltitoolmanager</param>
