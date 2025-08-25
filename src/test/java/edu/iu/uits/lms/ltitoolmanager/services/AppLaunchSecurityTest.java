@@ -34,6 +34,7 @@ package edu.iu.uits.lms.ltitoolmanager.services;
  */
 
 import edu.iu.uits.lms.canvas.services.ExternalToolsService;
+import edu.iu.uits.lms.common.server.ServerInfo;
 import edu.iu.uits.lms.lti.LTIConstants;
 import edu.iu.uits.lms.lti.config.TestUtils;
 import edu.iu.uits.lms.lti.controller.InvalidTokenContextException;
@@ -54,7 +55,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import uk.ac.ox.ctl.lti13.security.oauth2.client.lti.authentication.OidcAuthenticationToken;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -77,7 +77,10 @@ public class AppLaunchSecurityTest {
    @MockitoBean
    private LmsDefaultGrantedAuthoritiesMapper lmsDefaultGrantedAuthoritiesMapper;
 
-   @Test
+    @MockitoBean(name = ServerInfo.BEAN_NAME)
+    private ServerInfo serverInfo;
+
+    @Test
    public void appNoAuthnLaunch() throws Exception {
       //This is a secured endpoint and should not allow access without authn
       mvc.perform(get("/app/launch")
