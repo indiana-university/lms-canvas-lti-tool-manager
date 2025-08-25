@@ -4,7 +4,7 @@ package edu.iu.uits.lms.ltitoolmanager.services.swagger;
  * #%L
  * lti-tool-manager
  * %%
- * Copyright (C) 2015 - 2022 Indiana University
+ * Copyright (C) 2015 - 2025 Indiana University
  * %%
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted provided that the following conditions are met:
@@ -33,18 +33,27 @@ package edu.iu.uits.lms.ltitoolmanager.services.swagger;
  * #L%
  */
 
-import edu.iu.uits.lms.lti.swagger.AbstractSwaggerDisabledTest;
-import edu.iu.uits.lms.ltitoolmanager.WebApplication;
-import edu.iu.uits.lms.ltitoolmanager.config.SecurityConfig;
-import org.springframework.boot.test.context.SpringBootTest;
+import edu.iu.uits.lms.lti.config.LtiClientTestConfig;
+import edu.iu.uits.lms.lti.config.SwaggerConfig;
+import edu.iu.uits.lms.lti.swagger.SwaggerTestingBean;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Import;
 
+import java.util.ArrayList;
 import java.util.List;
 
-@SpringBootTest(classes = {WebApplication.class, SecurityConfig.class, SwaggerLtiToolManagerTestConfig.class})
-public class SwaggerDisabledTest extends AbstractSwaggerDisabledTest {
+@Import({
+            SwaggerConfig.class,
+            LtiClientTestConfig.class
+})
+public class LtiToolManagerSwaggerConfig {
+    @Bean
+    public SwaggerTestingBean swaggerTestingBean() {
+        SwaggerTestingBean stb = new SwaggerTestingBean();
 
-   @Override
-   protected List<String> getEmbeddedSwaggerToolPaths() {
-      return SwaggerTestUtil.getEmbeddedSwaggerToolPaths(super.getEmbeddedSwaggerToolPaths());
-   }
+        List<String> expandedList = new ArrayList<>();
+
+        stb.setEmbeddedSwaggerToolPaths(expandedList);
+        return stb;
+    }
 }
