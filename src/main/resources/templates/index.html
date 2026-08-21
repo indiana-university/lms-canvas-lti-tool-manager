@@ -90,11 +90,11 @@
                                 <span>Edit <span class="rvt-sr-only" th:text="${tool.name}">Hammer</span></span>
                             </button>
                             <th:block th:if="${tool.url == editButtonlaunchUrl}">
-                                <div th:replace="fragments :: delete-redirect(${tool.id}, ${tool.name})"></div>
-                                <div th:replace="fragments :: edit-tool-properties(${tool.id}, ${tool.name}, ${tool.customFields.get('url')}, ${tool.courseNavigation != null} ? ${tool.courseNavigation.get('enabled')} : false)"></div>
+                                <div th:replace="~{fragments :: delete-redirect(${tool.id}, ${tool.name})}"></div>
+                                <div th:replace="~{fragments :: edit-tool-properties(${tool.id}, ${tool.name}, ${tool.customFields.get('url')}, ${tool.courseNavigation != null} ? ${tool.courseNavigation.get('enabled')} : false)}"></div>
                             </th:block>
                             <th:block th:if="${tool.url != editButtonlaunchUrl}">
-                                <div th:replace="fragments :: delete-regular(${tool.id}, ${tool.name})"></div>
+                                <div th:replace="~{fragments :: delete-regular(${tool.id}, ${tool.name})}"></div>
                             </th:block>
                         </td>
                     </tr>
