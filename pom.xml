@@ -61,7 +61,7 @@
         <jdk.target>25</jdk.target>
         <jquery.version>3.7.1</jquery.version>
 
-        <lms-embedded-services.version>7.0.3</lms-embedded-services.version>
+        <lms-embedded-services.version>7.0.5</lms-embedded-services.version>
         <lms-team-spring-boot-it12>7.6.0_0</lms-team-spring-boot-it12>
         <lms-canvas-rivet.version>7.2.9.1_0</lms-canvas-rivet.version>
         <spring-cloud.version>2025.1.3</spring-cloud.version>
