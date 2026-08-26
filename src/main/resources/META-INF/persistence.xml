@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
   #%L
   lti-tool-manager
@@ -32,40 +32,18 @@
   #L%
   -->
 
-<html lang="en-US"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-<head>
-    <title>Edit/Delete Course Apps</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <link th:replace="~{commonFragments/favicon :: favicon}" />
-    <link media="all" rel="stylesheet" type="text/css" th:href="@{/app/jsrivet/rivet-core/rivet.min.css}" />
-    <link media="all" rel="stylesheet" type="text/css" th:href="@{/app/css/lti-tool-manager.css}"/>
-</head>
-<body>
+<persistence version="3.0"
+             xmlns="https://jakarta.ee/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd">
 
-<div layout:fragment="content" class="rvt-container-xl" role="main" aria-labelledby="tool-title">
-    Page content goes here
-</div>
+    <persistence-unit name="postgresql" transaction-type="RESOURCE_LOCAL">
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <jar-file>file:@project.build.directory@/schemagen-jars/lms-canvas-lti-framework.jar</jar-file>
+        <exclude-unlisted-classes>false</exclude-unlisted-classes>
+        <properties>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
+        </properties>
+    </persistence-unit>
 
-
-
-<th:block th:with="siElements=${@serverInfo.elements}">
-    <div th:replace="~{commonFragments/layouts :: footer(${hideFooter}, ${siElements})}"></div>
-</th:block>
-
-<script type="text/javascript" th:src="@{/app/jsrivet/rivet-core/rivet.min.js}"></script>
-<script>
-  Rivet.init();
-</script>
-
-<th:block layout:fragment="script">
-    <!--
-        // load in individual pages javascript
-    -->
-</th:block>
-</body>
-</html>
+</persistence>
