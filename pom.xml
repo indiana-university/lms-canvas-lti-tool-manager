@@ -59,7 +59,7 @@
         <java.version>25</java.version>
         <jdk.source>25</jdk.source>
         <jdk.target>25</jdk.target>
-        <jquery.version>3.7.1</jquery.version>
+        <jquery.version>4.0.0</jquery.version>
 
         <lms-embedded-services.version>7.0.5</lms-embedded-services.version>
         <lms-team-spring-boot-it12>7.6.0_0</lms-team-spring-boot-it12>
