@@ -35,6 +35,8 @@ package edu.iu.uits.lms.ltitoolmanager.controller;
 
 import edu.iu.uits.lms.canvas.model.ExternalTool;
 import edu.iu.uits.lms.canvas.services.ExternalToolsService;
+import edu.iu.uits.lms.canvasoauth2.CanvasOAuth2Registration;
+import edu.iu.uits.lms.canvasoauth2.security.CanvasOAuth2AuthorizedClientRepository;
 import edu.iu.uits.lms.lti.LTIConstants;
 import edu.iu.uits.lms.lti.controller.OidcTokenAwareController;
 import edu.iu.uits.lms.lti.service.OidcTokenUtils;
@@ -42,14 +44,18 @@ import edu.iu.uits.lms.ltitoolmanager.config.ToolConfig;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestWrapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 import uk.ac.ox.ctl.lti13.security.oauth2.client.lti.authentication.OidcAuthenticationToken;
 
@@ -66,7 +72,34 @@ public class ToolController extends OidcTokenAwareController {
    @Autowired
    private ExternalToolsService externalToolsService;
 
+   @Autowired
+   @Qualifier("CanvasRestTemplateAsUser")
+   private RestTemplate canvasRestTemplateAsUser;
+
+   @Autowired
+   private CanvasOAuth2AuthorizedClientRepository canvasOAuth2AuthorizedClientRepository;
+
+   @Autowired
+   private CanvasOAuth2Registration canvasOAuth2Registration;
+
    private final String editButtonlaunchUrl = "https://www.edu-apps.org/redirect";
+
+   /**
+    * Guards every action in this controller with the per-user Canvas OAuth2 consent flow before
+    * the handler method runs - index (list) and delete both now make their Canvas call as the
+    * launching instructor's own OAuth2 token (see
+    * docs/oauth/LTI_TOOL_MANAGER_CANVAS_OAUTH2_EVALUATION.md); edit stays on the shared admin
+    * token, but gating the whole controller here is simpler than threading a conditional check
+    * through just two of the three actions, and index is the first real page every launch hits
+    * anyway. When canvas.oauth2.enabled is off, this is a dark-launch no-op (see
+    * CanvasOAuth2AuthorizedClientRepository#ensureAuthorized).
+    * @param request current request, used to build the "return here after consent" redirect
+    */
+   @ModelAttribute
+   public void ensureCanvasOAuth2Consent(HttpServletRequest request) {
+      canvasOAuth2AuthorizedClientRepository.ensureAuthorized(
+              canvasOAuth2Registration.getRegistrationId(), SecurityContextHolder.getContext().getAuthentication(), request);
+   }
 
    @RequestMapping("/launch")
    public String launch(Model model, SecurityContextHolderAwareRequestWrapper request) {
@@ -93,7 +126,7 @@ public class ToolController extends OidcTokenAwareController {
       log.debug("in /index");
       getValidatedToken(courseId);
 
-      List<ExternalTool> externalToolsList = externalToolsService.getExternalTools(courseId);
+      List<ExternalTool> externalToolsList = externalToolsService.getExternalTools(courseId, canvasRestTemplateAsUser);
       model.addAttribute("externalToolsList", externalToolsList);
       model.addAttribute("editButtonlaunchUrl", editButtonlaunchUrl);
 
@@ -107,7 +140,7 @@ public class ToolController extends OidcTokenAwareController {
       getValidatedToken(courseId);
 
       // delete the external tool
-      ExternalTool externalTool = externalToolsService.deleteExternalTool(courseId, toolId);
+      ExternalTool externalTool = externalToolsService.deleteExternalTool(courseId, toolId, canvasRestTemplateAsUser);
 
       if ("deleted".equals(externalTool.getWorkflowState())) {
          model.addAttribute("success", "Deleted tool: " + externalTool.getName());

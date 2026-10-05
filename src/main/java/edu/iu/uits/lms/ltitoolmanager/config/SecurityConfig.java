@@ -35,6 +35,8 @@ package edu.iu.uits.lms.ltitoolmanager.config;
 
 import edu.iu.uits.lms.lti.service.LmsDefaultGrantedAuthoritiesMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.oauth2.client.endpoint.OAuth2AccessTokenResponseClient;
+import org.springframework.security.oauth2.client.endpoint.OAuth2AuthorizationCodeGrantRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -54,6 +56,9 @@ import static edu.iu.uits.lms.lti.LTIConstants.WELL_KNOWN_ALL;
 public class SecurityConfig {
     @Autowired
     private LmsDefaultGrantedAuthoritiesMapper lmsDefaultGrantedAuthoritiesMapper;
+
+    @Autowired
+    private OAuth2AccessTokenResponseClient<OAuth2AuthorizationCodeGrantRequest> canvasOAuth2AccessTokenResponseClient;
 
     @Order(6)
     @Bean
@@ -88,6 +93,9 @@ public class SecurityConfig {
 
         http.securityMatcher("/**")
                 .authorizeHttpRequests((authz) -> authz.anyRequest().authenticated())
+                .oauth2Client(oauth2 -> oauth2
+                        .authorizationCodeGrant(codeGrant -> codeGrant
+                                .accessTokenResponseClient(canvasOAuth2AccessTokenResponseClient)))
                 .headers(headers -> headers
                         .contentSecurityPolicy(csp ->
                                 csp.policyDirectives("style-src 'self' 'unsafe-inline'; form-action 'self'; frame-ancestors 'self' https://*.instructure.com"))
