@@ -126,7 +126,7 @@ public class ToolController extends OidcTokenAwareController {
       log.debug("in /index");
       getValidatedToken(courseId);
 
-      List<ExternalTool> externalToolsList = externalToolsService.getExternalTools(courseId, canvasRestTemplateAsUser);
+      List<ExternalTool> externalToolsList = externalToolsService.getExternalTools(courseId, null, null, canvasRestTemplateAsUser);
       model.addAttribute("externalToolsList", externalToolsList);
       model.addAttribute("editButtonlaunchUrl", editButtonlaunchUrl);
 
