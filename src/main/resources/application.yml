@@ -27,7 +27,28 @@ spring:
       resourceserver:
         jwt:
           jwk-set-uri: ${oauth.tokenprovider.url}/.well-known/jwks.json
+      client:
+        registration:
+          lms_canvas_oauth2_ltitoolmanager:
+            client-id: ${canvas.oauth2.clientId}
+            client-secret: ${canvas.oauth2.clientSecret}
+            authorization-grant-type: authorization_code
+            client-authentication-method: client_secret_post
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            scope:
+              - url:GET|/api/v1/courses/:course_id/external_tools
+              - url:DELETE|/api/v1/courses/:course_id/external_tools/:external_tool_id
+        provider:
+          lms_canvas_oauth2_ltitoolmanager:
+            authorization-uri: ${canvas.baseUrl}/login/oauth2/auth
+            token-uri: ${canvas.baseUrl}/login/oauth2/token
   web.error.whitelabel.enabled: false
+
+canvas:
+  oauth2:
+    enabled: true
+    clientId: ${canvas.oauth2.clientId.ltitoolmanager}
+    clientSecret: ${canvas.oauth2.clientSecret.ltitoolmanager}
 lti-tool-manager:
   version: @app.version@
   env: ${app.env}
