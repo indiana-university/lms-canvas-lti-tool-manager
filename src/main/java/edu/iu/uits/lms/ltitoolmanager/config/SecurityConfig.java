@@ -35,12 +35,13 @@ package edu.iu.uits.lms.ltitoolmanager.config;
 
 import edu.iu.uits.lms.lti.service.LmsDefaultGrantedAuthoritiesMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.oauth2.client.endpoint.OAuth2AccessTokenResponseClient;
+import org.springframework.security.oauth2.client.endpoint.OAuth2AuthorizationCodeGrantRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.security.web.header.writers.ReferrerPolicyHeaderWriter;
@@ -55,12 +56,17 @@ public class SecurityConfig {
     @Autowired
     private LmsDefaultGrantedAuthoritiesMapper lmsDefaultGrantedAuthoritiesMapper;
 
+    @Autowired
+    private OAuth2AccessTokenResponseClient<OAuth2AuthorizationCodeGrantRequest> canvasOAuth2AccessTokenResponseClient;
+
     @Order(6)
     @Bean
     public SecurityFilterChain appFilterChain(HttpSecurity http) throws Exception {
-        http.securityMatcher(WELL_KNOWN_ALL, "/api/**", "/app/**")
+        http.securityMatcher(WELL_KNOWN_ALL, "/api/**", "/app/**", "/favicon.ico")
                 .authorizeHttpRequests((authz) -> authz
                         .requestMatchers(WELL_KNOWN_ALL, "/api/**").permitAll()
+                        .requestMatchers("/app/jsrivet/**", "/app/webjars/**", "/app/css/**",
+                                "/app/js/**", "/favicon.ico").permitAll()
                         .requestMatchers("/**").hasAuthority(BASE_USER_AUTHORITY)
                 )
                 .headers(headers -> headers
@@ -73,11 +79,6 @@ public class SecurityConfig {
         return http.build();
     }
 
-    @Bean
-    public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().requestMatchers("/app/jsrivet/**", "/app/webjars/**", "/app/css/**", "/app/js/**", "/favicon.ico");
-    }
-
     @Order(7)
     @Bean
     public SecurityFilterChain catchallFilterChain(HttpSecurity http) throws Exception {
@@ -88,6 +89,9 @@ public class SecurityConfig {
 
         http.securityMatcher("/**")
                 .authorizeHttpRequests((authz) -> authz.anyRequest().authenticated())
+                .oauth2Client(oauth2 -> oauth2
+                        .authorizationCodeGrant(codeGrant -> codeGrant
+                                .accessTokenResponseClient(canvasOAuth2AccessTokenResponseClient)))
                 .headers(headers -> headers
                         .contentSecurityPolicy(csp ->
                                 csp.policyDirectives("style-src 'self' 'unsafe-inline'; form-action 'self'; frame-ancestors 'self' https://*.instructure.com"))
